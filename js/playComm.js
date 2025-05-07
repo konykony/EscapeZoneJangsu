@@ -408,8 +408,8 @@ function initFooterEvents(){
 	setStageStartTime();
 
 	updateHintBtn(); // 힌트 버튼 업데이트
-	// setInterval(updateDisplayTime, 60*1000); // 1분 간격으로 업데이트
-	setInterval(updateHintBtn, 10*1000); // 10초 간격으로 업데이트
+	setInterval(updateDisplayTime, 60*1000); // 1분 간격으로 업데이트
+	// setInterval(updateHintBtn, 1*1000); // 1초 간격으로 업데이트
 }
 
 // 힌트 버튼 업데이트
@@ -424,8 +424,8 @@ function updateHintBtn(){
 	
 
 		// 바꾸기기
-		// if(timeDifferenceMs > (minute*60*1000)){ // 힌트레벨 X 3분
-		if(timeDifferenceMs > (minute*1*1000)){ // 힌트레벨 X 3분
+		if(timeDifferenceMs > (minute*60*1000)){ // 힌트레벨 X 3분
+		// if(timeDifferenceMs > (minute*1*1000)){ // 힌트레벨 X 1초
 			$(this).removeClass('btn-outline-secondary').addClass('btn-primary');
 		}
 	});

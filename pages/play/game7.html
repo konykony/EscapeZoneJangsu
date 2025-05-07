@@ -201,7 +201,8 @@
             <h4>2단계: 재료 조합</h4>
             <ul id="stack-area" class="list-group mb-3"></ul>
             <div class="text-center">
-                <button id="checkRecipe" class="btn btn-success">확인</button>
+                <!-- <button id="checkRecipe" class="btn btn-success">확인</button> -->
+                <button id="btnNext" class="btn btn-success">다음</button>
                 <button id="retryStage2" class="btn btn-secondary">재시도</button>
             </div>
             <div id="finalResult" class="mt-3 text-center"></div>
@@ -372,7 +373,12 @@
             }
 
             $('#toStage2').click(() => {
-                $('#stack-area').sortable();
+                // $('#stack-area').sortable();
+                $('#stack-area').sortable({
+                    stop: function( event, ui ) {
+                        checkToast();
+                    }
+                });
                 $('#stage1').removeClass('active');
                 $('#stage2').addClass('active');
                 const shuffled = [...order].sort(() => Math.random() - 0.5);
@@ -416,8 +422,38 @@
                     $('<li>').addClass('list-group-item').text(name)
                     );
                 });
-                $('#stack-area').sortable();
+                $('#stack-area').sortable({
+                    stop: function( event, ui ) {
+                        checkToast();
+                    }
+                });
             });
+
+            $('#btnNext').click(()=>{
+                setTimeout(() => {
+                    showExciting();
+                }, 100);
+            });
+
+            $('#btnNext').hide();
+            
+            function checkToast(){
+                const user = $('#stack-area li').map((_, li) => $(li).text()).get();
+                const ok = user.every((v, i) => v === order[i]);
+                if(ok){
+                    $('#finalResult')
+                    .text('🥳 완벽한 토스트!')
+                    .toggleClass('text-success', ok);
+                    $('#btnNext').show();
+                    // setTimeout(() => {
+                    //     showExciting();
+                    // }, 1000);
+                }
+                // $('#finalResult')
+                //     .text(ok ? '🥳 완벽한 토스트!' : '😅 순서가 틀렸어요!')
+                //     .toggleClass('text-success', ok)
+                //     .toggleClass('text-danger', !ok);
+            }
         });
     </script>
 </body>
