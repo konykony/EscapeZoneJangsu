@@ -166,7 +166,7 @@
             changeLockImg($(".lock-container"), "05");
 			$("#result").removeClass("alert-danger").addClass("alert-success").text("정답입니다!").slideDown();
 			isAnswerCorrect = true;
-			$("#myAudio")[0].play(); // 잠금 풀림 소리 재생
+			playUnlockSound(); // 잠금 풀림 소리 재생
 		}
 		
         $(document).ready(function() {
