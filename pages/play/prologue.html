@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>프롤로그</title>
+<link rel="stylesheet" href="../../lib/bootstrap-5.0.2-dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../css/common.css" />
+<style>
+body {
+	/*             background-color: #f8f9fa; */
+	color: #343a40;
+}
+
+.container {
+	max-width: 800px;
+	margin-top: 30px;
+	background-color: #fff;
+	padding: 30px;
+	border-radius: 10px;
+	/*             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+}
+
+h1 {
+	color: #0d6efd;
+	text-align: center;
+	margin-bottom: 40px;
+}
+
+.prologue {
+	font-size: 1.1em;
+	color: #6c757d;
+	white-space: pre-line;
+}
+
+.start-button {
+	display: block;
+	width: 200px;
+	margin: 30px auto 0;
+}
+</style>
+</head>
+<body>
+	<div class="container">
+		<h1 class="mb-4">프롤로그</h1>
+<!-- 		<div class="prologue mb-4">매년 입춘이면 따스한 햇살과 함께 봄의 기운이 찾아오는 작은 마을. -->
+<!-- 			하지만 올해는 이상하게도 봄이 오지 않았습니다. 차가운 바람만이 마을을 감싸고, 사람들은 불안에 떨고 있습니다. 마을 -->
+<!-- 			사람들은 입춘의 기운이 사라진 이유를 찾기 위해 노력했지만, 아무것도 알아내지 못했습니다. 절망에 빠진 마을 사람들은 마지막 -->
+<!-- 			희망을 걸고 당신에게 도움을 요청합니다. 당신은 오래전부터 전해져 내려오는 '봄의 조율사'의 후예입니다. 당신은 사라진 봄의 -->
+<!-- 			기운을 되찾을 수 있는 특별한 능력을 가지고 있습니다. 마을 사람들의 간절한 염원을 담아, 당신은 사라진 입춘의 기운을 찾아 -->
+<!-- 			떠나는 여정을 시작합니다. 당신 앞에는 입춘의 기운을 되찾기 위한 다양한 퍼즐과 숨겨진 이야기들이 기다리고 있습니다. 과연 -->
+<!-- 			당신은 사라진 입춘의 비밀을 밝혀내고, 다시 한번 마을에 따스한 봄을 가져다줄 수 있을까요?</div> -->
+			<div class="prologue mb-4">
+				장수탕은 동네에서 제일 오래된 목욕탕.
+				그리고 아무도 모르게, 이곳에는 사람의 몸과 마음을 씻어주는 선녀님이 일하고 있었다.
+
+				사람들은 이곳에서 따뜻한 위로를 얻고 돌아갔지만, 선녀님은 밤낮 없이 조용히 일만 계속했다.
+
+				오늘따라 선녀님이 할 일이 너무 많은데 다른 직원들은 어디로 갔을까?
+			</div>
+		<div class="d-grid gap-2 col-6 mx-auto">
+			<a href="#" class="btn btn-primary btn-lg btn-start">여정 시작</a>
+		</div>
+	</div>
+	<script src="../../lib/jquery/dist/jquery.min.js"></script>
+	<script src="../../lib/bootstrap-5.0.2-dist/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/3.0.1/js.cookie.min.js"></script>
+	<script src="../../js/cookieManage.js"></script>
+	<script src="../../js/jsonManage.js"></script>
+	<script src="../../js/common.js"></script>
+	<script src="../../js/jsonData/0515.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('.btn-start').click(function() {
+				clickBtnStart();
+			});
+			var currentStage = getGameStage();
+			if (isNaN(currentStage) || currentStage > 0) {
+				goErrorPage();
+			}
+		});
+		
+		function clickBtnStart(){
+			var currentStage = getGameStage();
+			if(!isNaN(currentStage) && currentStage == 0){
+				goNextPage();
+			}else{
+				goErrorPage();
+			}
+		}
+	</script>
+</body>
+</html>
