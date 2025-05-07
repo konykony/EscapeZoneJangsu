@@ -41,38 +41,39 @@
 </head>
 
 <body style="min-height: 100vh;">
-	<header></header>
-	<main class="flex-column align-items-center justify-content-center bg-light p-4">
-        
-  <div id="puzzle-contents" class="puzzle-place">
-    <img id="puzzleImg" class="w-100">
-    <div id="puzzleContent"></div>
-  </div>
-    <!-- <h2 class="text-center mb-4">🛁 물 온도 맞추기</h2> -->
-    <p class="goal-text text-center">🎯 목표 온도: 38.0°C를 맞춰보세요!</p>
-    <p id="timer" class="text-center mb-2">남은 시간: 30초</p>
+    <header></header>
+    <main class="flex-column align-items-center justify-content-center">
 
-    <div class="temperature-display text-primary fw-bold text-center" id="temperature">
-        현재 온도: 34.0°C
-    </div>
+        <div id="puzzle-contents" class="puzzle-place">
+            <img id="puzzleImg" class="w-100">
+            <div id="puzzleContent"></div>
+        </div>
+        <!-- <h2 class="text-center mb-4">🛁 물 온도 맞추기</h2> -->
+        <p class="goal-text text-center">🎯 목표 온도: 38.0°C를 맞춰보세요!</p>
+        <p id="timer" class="text-center mb-2">남은 시간: 30초</p>
 
-    <div class="container mb-3">
-        <div class="row g-3">
-            <div class="col-6">
-                <button id="coldBtn" class="btn btn-info btn-temp">냉수</button>
-            </div>
-            <div class="col-6">
-                <button id="hotBtn" class="btn btn-danger btn-temp">온수</button>
+        <div class="temperature-display text-primary fw-bold text-center" id="temperature">
+            현재 온도: 34.0°C
+        </div>
+
+        <div class="container mb-3">
+            <div class="row g-3">
+                <div class="col-6">
+                    <button id="coldBtn" class="btn btn-info btn-temp">냉수</button>
+                </div>
+                <div class="col-6">
+                    <button id="hotBtn" class="btn btn-danger btn-temp">온수</button>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="feedback text-center fw-semibold" id="feedback"></div>
-
-    <button id="retryBtn" class="btn btn-secondary mt-4 d-none">🔁 재도전</button>
+        <div class="feedback text-center fw-semibold" id="feedback"></div>
+        <div class="text-center mt-4">
+            <button id="retryBtn" class="btn btn-secondary d-none">🔁 재도전</button>
+        </div>
     </main>
     <footer></footer>
-	<div id="exciting"></div>
+    <div id="exciting"></div>
 
     <script src="../../lib/jquery/dist/jquery.min.js"></script>
     <script src="../../lib/bootstrap-5.0.2-dist/js/bootstrap.min.js"></script>
