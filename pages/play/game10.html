@@ -251,6 +251,7 @@
       $('#resetBtn').click(init);
 
       function updateResult() {
+	      playAudio('jump09.mp3');
         const filled = $('.cabinets .towel').length;
         if (filled < 4) {
           $('#result').empty();
