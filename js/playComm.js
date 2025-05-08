@@ -451,8 +451,8 @@ function initFooterEvents(){
 	setStageStartTime();
 
 	updateHintBtn(); // 힌트 버튼 업데이트
-	// setInterval(updateDisplayTime, 60*1000); // 1분 간격으로 업데이트
-	setInterval(updateDisplayTime, 10*1000); // 10초 간격으로 업데이트
+	// setInterval(updateHintBtn, 60*1000); // 1분 간격으로 업데이트
+	setInterval(updateHintBtn, 10*1000); // 10초 간격으로 업데이트
 }
 
 // 힌트 버튼 업데이트
