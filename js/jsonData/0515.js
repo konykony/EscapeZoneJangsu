@@ -37,7 +37,7 @@ const puzzleData = {
 			"imgUrl": ""
 		},{
 			"stage": 5,
-			"solution": "264",
+			"solution": "263",
 			"content": `목욕탕 정리를 끝내고 난 선녀님은 냉장고에 처음보는 단어와 자물쇠가 채워져 있는 것을 발견했다.
 			비밀번호는??`,
 			"lock": "game5.html",

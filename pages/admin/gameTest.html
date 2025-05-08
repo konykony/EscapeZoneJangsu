@@ -92,7 +92,7 @@
                 for (let i = 1; i <= 11; i++) {
                     const btn = $('<a>')
                         .addClass('btn btn-outline-secondary')
-                        .text(`game${i}.html`)
+                        .text(`${i}번 게임`)
                         .attr('href', `../play/game${i}.html?mode=test&user=admin`);
                     $('#gameList .d-grid').append(btn);
                 }
