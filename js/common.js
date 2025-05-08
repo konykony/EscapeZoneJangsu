@@ -15,6 +15,18 @@ function getUrlParameter(name) {
 	return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
 }
 
+// 페이지 테스트 인지 확인
+function checkTestMode(){
+	const params = new URLSearchParams(window.location.search);
+    const mode = params.get("mode");
+	// const mode = $('#testMode').attr('data-param-value');
+	if(mode != null && mode == "test"){
+		return true;
+	}else{
+		return false;
+	}
+}
+
 // 현재 페이지 이름 확인 ex) pathNm = index.html
 function isCurrentPage(pathNm) {
 	// 현재 페이지의 전체 URL을 가져옵니다.
@@ -50,8 +62,13 @@ function goCurrentPage() {
 	}
 }
 
+
 // 다음 페이지로 이동
 function goNextPage() {
+
+	if(checkTestMode()){ // test 모드인 경우
+		window.location.reload();
+	}
 
 	var currentStage = getGameStage();
 	if (isCurrentPage("prologue.html") && currentStage == 0 && (isNaN(getStartTime()) || getStartTimeCookie() == null)) { // 프롤로그 페이지인 경우

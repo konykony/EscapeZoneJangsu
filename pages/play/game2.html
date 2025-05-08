@@ -77,6 +77,9 @@
             transform: translate(-50%, -50%);
             display: none;
         }
+        #lock-container button{
+            cursor: pointer; /* 기본 포인터(손가락)로 유지 */
+        }
     </style>
 </head>
 
@@ -232,11 +235,23 @@
             canvas.addEventListener("touchmove", handleMove);
             canvas.addEventListener("touchend", handleEnd);
 
-            // 마우스 따라다니는 커서
-            $(document).on("mousemove touchmove", function (e) {
+            // // 마우스 따라다니는 커서
+            // $(document).on("mousemove touchmove", function (e) {
+            //     let x = e.clientX || (e.touches && e.touches[0].clientX);
+            //     let y = e.clientY || (e.touches && e.touches[0].clientY);
+            //     cursor.css({ top: y, left: x }).show();
+            // });
+
+            // 마우스/터치가 거울 위에 있을 때만 도구 커서 표시
+            $(".mirror-container").on("mousemove touchmove", function (e) {
                 let x = e.clientX || (e.touches && e.touches[0].clientX);
                 let y = e.clientY || (e.touches && e.touches[0].clientY);
                 cursor.css({ top: y, left: x }).show();
+            });
+
+            // 거울에서 벗어나면 숨김
+            $(".mirror-container").on("mouseleave touchend", function () {
+                cursor.hide();
             });
 
             $(document).on("touchend mouseleave", function () {

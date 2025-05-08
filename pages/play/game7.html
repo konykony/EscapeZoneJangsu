@@ -381,8 +381,8 @@
                 });
                 $('#stage1').removeClass('active');
                 $('#stage2').addClass('active');
-                const shuffled = [...order].sort(() => Math.random() - 0.5);
-
+                // const shuffled = [...order].sort(() => Math.random() - 0.5);
+                const shuffled = shuffleArray([...order]);
                 // foreach 실행
                 shuffled.forEach(name => {
                     $('#stack-area').append(
@@ -397,7 +397,13 @@
                 //   });
                 // $('#stack-area').sortable();
             });
-
+            function shuffleArray(array) {
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]]; // ES6 구조 분해 할당을 이용한 swap
+                }
+                return array;
+            }
             $('#checkRecipe').click(() => {
                 const user = $('#stack-area li').map((_, li) => $(li).text()).get();
                 const ok = user.every((v, i) => v === order[i]);
@@ -438,6 +444,7 @@
             $('#btnNext').hide();
             
             function checkToast(){
+                playAudio('jump09.mp3');
                 const user = $('#stack-area li').map((_, li) => $(li).text()).get();
                 const ok = user.every((v, i) => v === order[i]);
                 if(ok){
@@ -445,6 +452,8 @@
                     .text('🥳 완벽한 토스트!')
                     .toggleClass('text-success', ok);
                     $('#btnNext').show();
+                    $('#stack-area').sortable('disable');
+                    playAudio('success.mp3');
                     // setTimeout(() => {
                     //     showExciting();
                     // }, 1000);

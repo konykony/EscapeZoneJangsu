@@ -171,13 +171,16 @@
   <script src="../../js/playComm.js"></script>
   <script>
 
-    const maxLevel = 10,
+    const maxLevel = 10;
       // finalScore = 50;
-      finalScore = 500;
+    let finalScore = 500;
     let lastItemName = '';
     let bathStreak = 0;
 
     $(function () {
+      if(checkTestMode()){
+        finalScore = 50;
+      }
       const $area = $('#game-area');
       let score = 0,
         level = 1,

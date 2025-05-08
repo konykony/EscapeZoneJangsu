@@ -13,9 +13,30 @@ $(document).ready(function() {
 	}else{ // 테스트모드 인 경우
 		$('header').hide();
 		$('footer').hide();
+		addAdminBtn();
 	}
 });
 
+//관리자 전용 버튼 추가
+function addAdminBtn(){
+	const params = new URLSearchParams(window.location.search);
+  	const isAdmin = params.get('user') === 'admin';
+
+	if (isAdmin) {
+		const adminBtn = $('<button>')
+		.addClass('btn btn-primary mt-3')
+		.text('관리자 페이지')
+		.click(function () {
+		window.location.href = '../admin/gameTest.html';
+		});
+
+		const wrapperDiv = $('<div>')
+			.addClass('text-center')
+			.append(adminBtn);
+
+	$('main').after(wrapperDiv);
+	}
+}
 
 function appendScripts(scriptSrc, callback){
 	var script = document.createElement('script');
@@ -170,17 +191,51 @@ function showExistHint(hintLevel){
 	openPopup(title, content);
 }
 
+// 
+function getCurrentPageNm(){
+	const url = window.location.pathname;         // 예: /pages/play/game1.html
+	const filename = url.substring(url.lastIndexOf('/') + 1); // game1.html
+	return filename;
+}
+
+// 현재 페이지와 쿠키속 stage가 일치 하는지 확인
+function checkCurrentPage(){
+	const filename = getCurrentPageNm();
+	var currentStage = getGameStage();
+
+	if (filename.includes("game")) {
+		let num = Number(filename.match(/\d+/));
+		if (isNaN(num)) {
+			return false;
+		} else if(num > 0 && num <= 11 && num == currentStage) {
+			return true;
+		}
+	}else if(filename.includes('final') && getEndTimeCookie() == null){
+		return false;
+	}else {
+		return true;
+	}
+}
+
 // 현재 페이지 확인
 function checkUserPage() {
 	if(checkPage8()){
 		return true;
 	}
 
-	if(checkTestMode()){
-		return true;
+	// if(checkTestMode()){
+	// 	return true;
+	// }else{
+	// 	const filename = getCurrentPageNm();
+	// 	if (filename.includes("game")) {
+
+	// 	}
+	// }
+	if(!checkCurrentPage()){ // 쿠키에 저장된 페이지와 다른경우
+		goErrorPage();
 	}
 	if(getEndTimeCookie() != null){ // 게임이 끝난 경우
-		location.href = "/pages/play/Final.html";
+		location.href = "/pages/play/final.html";
 	}else if(isNaN(getStartTime()) || getStartTimeCookie() == null){ // 시작 한 적이 없는 경우(접속 url 잘못 입력)
 		goErrorPage();
 	}
@@ -223,18 +278,6 @@ function checkPage8(){
 		  }
 	}
 	return false;
-}
-
-// 페이지 테스트 인지 확인
-function checkTestMode(){
-	const params = new URLSearchParams(window.location.search);
-    const mode = params.get("mode");
-	// const mode = $('#testMode').attr('data-param-value');
-	if(mode != null && mode == "test"){
-		return true;
-	}else{
-		return false;
-	}
 }
 
 function playAudio(fileName){
