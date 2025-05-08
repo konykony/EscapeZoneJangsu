@@ -452,7 +452,7 @@ function initFooterEvents(){
 
 	updateHintBtn(); // 힌트 버튼 업데이트
 	// setInterval(updateDisplayTime, 60*1000); // 1분 간격으로 업데이트
-	setInterval(updateHintBtn, 10*1000); // 10초 간격으로 업데이트
+	setInterval(updateDisplayTime, 10*1000); // 10초 간격으로 업데이트
 }
 
 // 힌트 버튼 업데이트
@@ -464,7 +464,6 @@ function updateHintBtn(){
 		const currentTime = new Date(); // 현재 시간
 		const currentStage = parseInt(getGameStage());
 		const timeDifferenceMs = currentTime - getStageStartTime(); // 밀리초 단위 차이
-	
 
 		// 바꾸기기
 		if(timeDifferenceMs > (minute*60*1000)){ // 힌트레벨 X 3분
