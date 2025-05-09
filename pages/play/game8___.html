@@ -75,7 +75,7 @@
         const lightParam = params.get('light');
         
         $(function () {
-            if(!checkTestMode() && getGameStage() != 8){
+            if(getGameStage() != 8){
                 const n = parseInt(lightParam, 10);
                 if (n >= 1 && n <= 9) {
                     $("header").hide();
@@ -88,8 +88,7 @@
                 }
             }else{
                 // load state from cookie or init
-                // let lights = Cookies.get('lights');
-                let lights = getLightInfo();
+                let lights = Cookies.get('lights');
                 lights = lights ? JSON.parse(lights) : Array(9).fill(false);
     
                 // render grid
@@ -115,8 +114,7 @@
                             showMsg('⚠️ 이미 켜진 전등입니다.', 'warning');
                         } else {
                             lights[n - 1] = true;
-                            // Cookies.set('lights', JSON.stringify(lights), { expires: 7 });
-                            setLightInfo(JSON.stringify(lights));
+                            Cookies.set('lights', JSON.stringify(lights), { expires: 7 });
                             showMsg(`💡 ${n}번 전등이 켜졌습니다!`, 'success');
                             $(`.light[data-index=${n - 1}]`).addClass('on');
                         }

@@ -136,3 +136,13 @@ function setGameName(name){
 function getGameName(){
 	return Cookies.get('ezGameName'); 
 }
+
+// 쿠키에 라이트 정보 추가
+function setLightInfo(lights){
+	Cookies.set('ezLights', lights, { expires: expiresDay, domain: window.location.hostname });
+}
+
+// 쿠키에서 라이트 정보보 가져오기
+function getLightInfo(){
+	return Cookies.get('ezLights'); 
+}

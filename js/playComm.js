@@ -1,5 +1,4 @@
 let startTime = Date.now(); // 페이지 로드 시 시작 시간 기록
-
 $(document).ready(function() {
 	if(!checkTestMode()){ // 테스트모드가 아닌 경우
 		checkUserPage(); // 현재 페이지 확인
@@ -10,10 +9,11 @@ $(document).ready(function() {
 		initExciting();
 		// setJsonDataScript(function(){ // 스크립트가 로드 된 후 실행
 		// });
+	}else if(isAdmin()){
+		addAdminBtn();
 	}else{ // 테스트모드 인 경우
 		$('header').hide();
 		$('footer').hide();
-		addAdminBtn();
 	}
 
 	$(window).on('beforeunload', function() {
@@ -21,12 +21,14 @@ $(document).ready(function() {
 	});
 });
 
+function isAdmin(){
+	const params = new URLSearchParams(window.location.search);
+	return params.get('user') === 'admin';
+}
+
 //관리자 전용 버튼 추가
 function addAdminBtn(){
-	const params = new URLSearchParams(window.location.search);
-  	const isAdmin = params.get('user') === 'admin';
-
-	if (isAdmin) {
+	if (isAdmin()) {
 		const adminBtn = $('<button>')
 		.addClass('btn btn-primary mt-3')
 		.text('관리자 페이지')
@@ -222,32 +224,33 @@ function checkCurrentPage(){
 function checkUserPage() {
 	if(checkPage8()){
 		return true;
-	}
-
-	// if(checkTestMode()){
-	// 	return true;
-	// }else{
-	// 	const filename = getCurrentPageNm();
-	// 	if (filename.includes("game")) {
-
-	// 	}
-	// }
-	if(!checkCurrentPage()){ // 쿠키에 저장된 페이지와 다른경우
-		goErrorPage();
-	}
-	if(getEndTimeCookie() != null){ // 게임이 끝난 경우
-		location.href = "/pages/play/final.html";
-	}else if(isNaN(getStartTime()) || getStartTimeCookie() == null){ // 시작 한 적이 없는 경우(접속 url 잘못 입력)
-		goErrorPage();
-	}
-	var currentStage = getGameStage();
-	var currentPuzzle = getPuzzleData(currentStage);
-	if (currentPuzzle != null && !isCurrentPage("start.html")) {
-		var currentPuzzle = getPuzzleData(currentStage);
-		if (currentPuzzle.stage != currentStage) {
+	}else{
+		// if(checkTestMode()){
+		// 	return true;
+		// }else{
+		// 	const filename = getCurrentPageNm();
+		// 	if (filename.includes("game")) {
+	
+		// 	}
+		// }
+		if(!checkCurrentPage()){ // 쿠키에 저장된 페이지와 다른경우
 			goErrorPage();
 		}
+		if(getEndTimeCookie() != null){ // 게임이 끝난 경우
+			location.href = "/pages/play/final.html";
+		}else if(isNaN(getStartTime()) || getStartTimeCookie() == null){ // 시작 한 적이 없는 경우(접속 url 잘못 입력)
+			goErrorPage();
+		}
+		var currentStage = getGameStage();
+		var currentPuzzle = getPuzzleData(currentStage);
+		if (currentPuzzle != null && !isCurrentPage("start.html")) {
+			var currentPuzzle = getPuzzleData(currentStage);
+			if (currentPuzzle.stage != currentStage) {
+				goErrorPage();
+			}
+		}
 	}
+
 }
 
 function checkPage8(){

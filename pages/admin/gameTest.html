@@ -62,10 +62,15 @@
     </div>
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="../../lib/js-cookie-3.0.1-dist/js.cookie.min.js"></script>
     <script>
+        let PASS_WORD = "konny";
         $(document).ready(function () {
+            
+		    initCookieClear();
             // 페이지 로드시 쿠키 확인
-            if (getCookie('authenticated') === 'true') {
+            
+            if (localStorage.getItem("authenticated") === 'true') {
                 showGameList();
             }
 
@@ -74,9 +79,10 @@
                 const password = $('#passwordInput').val();
                 const message = $('#message');
 
-                if (password === 'konny') {
+                if (password === PASS_WORD) {
                     message.text('비밀번호가 맞습니다!').css('color', 'green').fadeIn();
-                    setCookie('authenticated', 'true', 1); // 쿠키에 인증 상태 저장
+                    // setCookie('authenticated', 'true', 1); // 쿠키에 인증 상태 저장
+                    localStorage.setItem("authenticated", "true");
                     showGameList();
                 } else {
                     message.text('비밀번호가 틀렸습니다.').css('color', 'red').fadeIn();
@@ -98,25 +104,38 @@
                 }
             }
 
-            // 쿠키 설정 함수
-            function setCookie(name, value, days) {
-                const expires = new Date();
-                expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
-                document.cookie = `${name}=${value}; expires=${expires.toUTCString()}; path=/`;
-            }
+            // // 쿠키 설정 함수
+            // function setCookie(name, value, days) {
+            //     const expires = new Date();
+            //     expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
+            //     document.cookie = `${name}=${value}; expires=${expires.toUTCString()}; path=/`;
+            // }
 
-            // 쿠키 가져오기 함수
-            function getCookie(name) {
-                const nameEQ = name + "=";
-                const ca = document.cookie.split(';');
-                for (let i = 0; i < ca.length; i++) {
-                    let c = ca[i];
-                    while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-                    if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
-                }
-                return null;
-            }
+            // // 쿠키 가져오기 함수
+            // function getCookie(name) {
+            //     const nameEQ = name + "=";
+            //     const ca = document.cookie.split(';');
+            //     for (let i = 0; i < ca.length; i++) {
+            //         let c = ca[i];
+            //         while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+            //         if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+            //     }
+            //     return null;
+            // }
         });
+
+        function initCookieClear(){
+            // 현재 도메인 정보
+            const domain = window.location.hostname;
+            
+            const cookies = Cookies.get(); // 모든 쿠키를 key-value 객체 형태로 가져옵니다.
+
+            for (const cookieName in cookies) {
+                if (cookies.hasOwnProperty(cookieName)) {
+                    Cookies.remove(cookieName, { domain: domain }); // 각 쿠키를 이름(key)을 사용하여 삭제합니다.
+                }
+            }
+        }
     </script>
 
 </body>
