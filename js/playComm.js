@@ -15,6 +15,10 @@ $(document).ready(function() {
 		$('footer').hide();
 		addAdminBtn();
 	}
+
+	$(window).on('beforeunload', function() {
+		location.href = "start.html";
+	});
 });
 
 //관리자 전용 버튼 추가
@@ -136,9 +140,6 @@ function updateDisplayTime() {
 
 // 힌트 보기
 function showHint(hintLevel, obj) {
-//	if($(obj).hasClass('btn-primary')){ // 이미 사용한 버튼은 팝업 안 띄우기
-//		return;
-//	}
 	var currentStage = getGameStage();
 	// 팝업 내용 동적 생성 및 추가
 	const contentWrapper = $('<div>').attr('id', 'content-wrapper'); // 추가된 wrapper div
@@ -443,7 +444,8 @@ function initFooterEvents(){
 		if($(this).hasClass('btn-primary')){ // 이미 사용한 버튼은 팝업 안 띄우기
 			showExistHint($(this).attr("data-hint-level"));
 		}else{
-			showHint($(this).attr("data-hint-level"), $(this));
+			// showHint($(this).attr("data-hint-level"), $(this));
+			showHintNot($(this).attr("data-hint-level"), $(this));
 		}
 	});
 	$('#popup-close-btn').click(closePopup);
@@ -452,7 +454,37 @@ function initFooterEvents(){
 
 	updateHintBtn(); // 힌트 버튼 업데이트
 	// setInterval(updateHintBtn, 60*1000); // 1분 간격으로 업데이트
-	setInterval(updateHintBtn, 10*1000); // 10초 간격으로 업데이트
+	setInterval(updateHintBtn, 1*1000); // 1초 간격으로 업데이트
+}
+
+// 밀리초를 분, 초로 변환
+function convertMsToTime(ms){
+	const totalSeconds = Math.floor(ms / 1000);
+	const minutes = Math.floor(totalSeconds / 60);
+	const seconds = totalSeconds % 60;
+
+	if (minutes === 0) {
+		return `${seconds}초`;
+	} else {
+		return `${minutes}분 ${String(seconds).padStart(2, '0')}초`;
+	}
+}
+
+function showHintNot(hintLevel, obj){
+	
+	var currentStage = getGameStage();
+	// 팝업 내용 동적 생성 및 추가
+	const contentWrapper = $('<div>').attr('id', 'content-wrapper'); // 추가된 wrapper div
+
+	var minute = parseInt(hintLevel) * (parseInt(hintLevel) + 1) / 2; // 힌트 단계는 1분 뒤, 2단계는 3분뒤, 3단계는 6분 뒤 실행
+	
+	const currentTime = new Date(); // 현재 시간
+	const timeDifferenceMs =  currentTime - getStageStartTime(); // 밀리초 단위 차이
+	
+	const content = $(`<p>${hintLevel}번 힌트를 보려면 ${convertMsToTime((minute*60*1000) - timeDifferenceMs)} 남았습니다.</p>`);
+
+    contentWrapper.append(content); // inputContainer를 contentWrapper에 추가
+    openPopupDynamic("힌트 조회", contentWrapper);
 }
 
 // 힌트 버튼 업데이트
